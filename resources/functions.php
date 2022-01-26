@@ -90,3 +90,6 @@ Container::getInstance()
             'view' => require dirname(__DIR__).'/config/view.php',
         ]);
     }, true);
+
+// New Role - Student
+add_role( 'student_role', __( 'Student' ), array( 'read' => true ) ); 
