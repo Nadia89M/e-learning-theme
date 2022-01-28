@@ -91,5 +91,41 @@ Container::getInstance()
         ]);
     }, true);
 
+function elearning_theme_files() {
+    wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+}
+    
+add_action('wp_enqueue_scripts', 'elearning_theme_files');
+
 // New Role - Student
 add_role( 'student_role', __( 'Student' ), array( 'read' => true ) ); 
+
+// Redirect student accounts out of admin and onto homepage
+add_action('admin_init', 'redirectStudentToFrontend');
+
+function redirectStudentToFrontend() {
+  $ourCurrentUser = wp_get_current_user();
+
+  if (count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'student_role') {
+    wp_redirect(site_url('/'));
+    exit;
+  }
+}
+
+add_action('wp_loaded', 'noStudentAdminBar');
+
+function noStudentAdminBar() {
+  $ourCurrentUser = wp_get_current_user();
+
+  if (count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'student_role') {
+    show_admin_bar(false);
+  }
+}
+
+// Redirect to homepage on logout
+add_action('wp_logout','auto_redirect_after_logout');
+
+function auto_redirect_after_logout(){
+  wp_safe_redirect( home_url() );
+  exit;
+}

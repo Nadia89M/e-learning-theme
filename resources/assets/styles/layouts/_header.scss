@@ -1,3 +1,21 @@
+.banner {
+  background-color: #f07167;
+  min-height: 46px;
+
+  li {
+    list-style: none;
+    float: right;
+
+    a {
+      box-shadow: none;
+      text-decoration: none;
+      color: #fff;
+      line-height: 46px;
+      font-weight: bold;
+    }
+  }
+}
+
 .banner .nav li {
   @extend .nav-item;
 }
